@@ -21,7 +21,7 @@ module Courrier
     end
 
     rake_tasks do
-      load File.expand_path("../tasks/courrier.rake", __dir__)
+      load File.join(File.dirname(__FILE__), "tasks", "courrier.rake")
     end
 
     module ClassMethods
