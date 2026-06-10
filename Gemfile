@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 gemspec
 
-gem "courrier", path: "../courrier"
+gem "courrier", github: "Rails-Designer/courrier"
 
 group :development do
   gem "standard", "~> 1.49"

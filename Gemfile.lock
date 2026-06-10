@@ -1,5 +1,6 @@
-PATH
-  remote: ../courrier
+GIT
+  remote: https://github.com/Rails-Designer/courrier.git
+  revision: a6cb8c086e18ead5bb6a3cf89373f7696ce720fe
   specs:
     courrier (0.10.0)
       logger (>= 1.5, < 3)
