@@ -2,6 +2,8 @@
 
 Rails-specific features for [Courrier](https://github.com/Rails-Designer/courrier), the API-powered email delivery gem for Ruby.
 
+![Preview of the Rails Courrier inbox with a list of images on the left and preview of an email on the right](https://raw.githubusercontent.com/Rails-Designer/rails_courrier/HEAD/.github/rails_courrier_inbox.jpg)
+
 
 ## Installation
 
@@ -9,6 +11,16 @@ Add to your Gemfile:
 ```bash
 bundle add rails_courrier
 ```
+
+<a href="https://railsdesigner.com/" target="_blank">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rails-Designer/courrier/HEAD/.github/logo-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Rails-Designer/courrier/HEAD/.github/logo-light.svg">
+    <img alt="Rails Designer logo" src="https://raw.githubusercontent.com/Rails-Designer/courrier/HEAD/.github/logo-light.svg" width="240" style="max-width: 100%;">
+  </picture>
+</a>
+
+**Sponsored By [Rails Designer](https://railsdesigner.com/)**
 
 
 ## Setup

@@ -8,7 +8,7 @@ module Courrier
       def initialize
         @destination = default_destination
         @auto_open = false
-        @template_path = File.expand_path("../../email/providers/inbox/default.html.erb", __dir__)
+        @template_path = File.expand_path("../email/providers/inbox/default.html.erb", __dir__)
       end
 
       private
