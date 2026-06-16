@@ -52,14 +52,14 @@ mount Courrier::Engine => "/courrier"
 ### Send emails
 
 ```ruby
-OrderEmail.deliver to: "recipient@example.com"
+OrderEmail.deliver to: "recipient@railsdesigner.com"
 ```
 
 
 ### Deliver later via ActiveJob
 
 ```ruby
-OrderEmail.deliver_later to: "recipient@example.com"
+OrderEmail.deliver_later to: "recipient@railsdesigner.com"
 ```
 
 Configure queue options in the email class:
