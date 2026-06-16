@@ -5,13 +5,6 @@ Rails-specific features for [Courrier](https://github.com/Rails-Designer/courrie
 ![Preview of the Rails Courrier inbox with a list of images on the left and preview of an email on the right](https://raw.githubusercontent.com/Rails-Designer/rails_courrier/HEAD/.github/rails_courrier_inbox.jpg)
 
 
-## Installation
-
-Add to your Gemfile:
-```bash
-bundle add rails_courrier
-```
-
 <a href="https://railsdesigner.com/" target="_blank">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rails-Designer/courrier/HEAD/.github/logo-dark.svg">
@@ -21,6 +14,14 @@ bundle add rails_courrier
 </a>
 
 **Sponsored By [Rails Designer](https://railsdesigner.com/)**
+
+
+## Installation
+
+Add to your Gemfile:
+```bash
+bundle add rails_courrier
+```
 
 
 ## Setup
