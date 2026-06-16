@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rails_courrier (0.4.0)
+    rails_courrier (0.5.0)
       actionpack (>= 7.0)
       actionview (>= 7.0)
       activejob (>= 7.0)
