@@ -17,5 +17,9 @@ module Courrier
         Rails.root.join("tmp", "courrier", "emails").to_s
       end
     end
+
+    def inbox
+      @inbox ||= Inbox.new
+    end
   end
 end

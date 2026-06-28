@@ -1,0 +1,140 @@
+<style>
+  .email-metadata {
+    display: flex;
+    flex-direction: column;
+    row-gap: .5rem;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgb(226 232 240);
+    background-color: white;
+    font-size: .875rem;
+    line-height: 1.25rem;
+  }
+
+  .email-metadata__row {
+    display: flex;
+    column-gap: .5rem;
+  }
+
+  .email-metadata__label {
+    font-weight: 600;
+    color: rgb(71 85 105);
+    min-width: 4rem;
+  }
+
+  .email-metadata__value {
+    color: rgb(15 23 42);
+  }
+
+  .email-tabs {
+    display: flex;
+    border-bottom: 1px solid rgb(226 232 240);
+    background-color: white;
+  }
+
+  .email-tabs__tab {
+    padding: .5rem 1rem;
+    font-size: .875rem;
+    font-weight: 500;
+    color: rgb(100 116 139);
+    border: none;
+    background: none;
+    cursor: default;
+    border-bottom: 2px solid transparent;
+
+    &[aria-selected="true"] {
+      color: rgb(59 130 246);
+      border-bottom-color: rgb(59 130 246);
+    }
+
+    &:hover { color: rgb(71 85 105); }
+  }
+
+  .email-panel {
+    display: none;
+    padding: 0;
+
+    &[aria-hidden="false"] { display: block; }
+  }
+
+  .email-panel__text {
+    padding: 1rem 1.5rem;
+    font-family: ui-monospace, monospace;
+    font-size: .875rem;
+    line-height: 1.5rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: rgb(15 23 42);
+  }
+
+  .email-panel__iframe {
+    width: 100%;
+    border: none;
+  }
+</style>
+
+<div class="email-metadata">
+  <div class="email-metadata__row">
+    <span class="email-metadata__label">Subject</span>
+    <span class="email-metadata__value"><%= @email.subject || "(no subject)" %></span>
+  </div>
+  <div class="email-metadata__row">
+    <span class="email-metadata__label">From</span>
+    <span class="email-metadata__value"><%= @email.from || "(not set)" %></span>
+  </div>
+  <div class="email-metadata__row">
+    <span class="email-metadata__label">To</span>
+    <span class="email-metadata__value"><%= @email.to %></span>
+  </div>
+</div>
+
+<div class="email-tabs">
+  <button class="email-tabs__tab" aria-selected="true" data-tab="html">HTML</button>
+  <% if @email.text.present? %>
+    <button class="email-tabs__tab" aria-selected="false" data-tab="text">Text</button>
+  <% end %>
+</div>
+
+<div class="email-panel" aria-hidden="false" data-panel="html">
+  <iframe class="email-panel__iframe" srcdoc="<%= @email.html %>" title="Email preview"></iframe>
+</div>
+
+<% if @email.text.present? %>
+  <div class="email-panel" aria-hidden="true" data-panel="text">
+    <pre class="email-panel__text"><%= @email.text %></pre>
+  </div>
+<% end %>
+
+<script>
+  (function() {
+    var iframe = document.querySelector(".email-panel__iframe");
+
+    function resizeIframe() {
+      try {
+        var doc = iframe.contentDocument || iframe.contentWindow.document;
+        iframe.style.height = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight) + "px";
+      } catch(e) {}
+    }
+
+    iframe.addEventListener("load", resizeIframe);
+    resizeIframe();
+
+    document.querySelectorAll("[data-tab]").forEach(function(tab) {
+      tab.addEventListener("click", function() {
+        document.querySelectorAll("[data-tab]").forEach(function(t) {
+          t.setAttribute("aria-selected", "false");
+        });
+        document.querySelectorAll("[data-panel]").forEach(function(p) {
+          p.setAttribute("aria-hidden", "true");
+        });
+
+        tab.setAttribute("aria-selected", "true");
+        var panel = document.querySelector('[data-panel="' + tab.dataset.tab + '"]');
+        if (panel) panel.setAttribute("aria-hidden", "false");
+
+        if (tab.dataset.tab === "html") {
+          resizeIframe();
+        }
+      });
+    });
+  })();
+</script>

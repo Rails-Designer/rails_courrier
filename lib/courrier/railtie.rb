@@ -47,3 +47,10 @@ module Courrier
     Courrier::Email.singleton_class.prepend InheritedHook
   end
 end
+
+module Courrier
+  class Preview
+    # TODO: this does not belong here
+    Email = Data.define(:primary, :secondary, :link, :scenarios)
+  end
+end

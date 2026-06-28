@@ -4,6 +4,8 @@ source "https://rubygems.org"
 
 gemspec
 
+gem "courrier", path: "../courrier"
+
 group :development do
   gem "standard", "~> 1.49"
 end

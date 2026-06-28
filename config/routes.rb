@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 Courrier::Engine.routes.draw do
-  resources :previews, only: %w[show], constraints: {id: /.*\.html/}
-  resource :cleanup, only: %w[create], module: "previews"
+  resources :inbox, only: %w[show]
+  resource :cleanup, only: %w[create], controller: "inbox"
 
-  root "previews#index"
+  resources :previews, only: %w[index show]
+
+  root "inbox#index"
 end

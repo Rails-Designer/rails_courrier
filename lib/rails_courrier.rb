@@ -12,10 +12,10 @@ require "launchy"
 
 require "courrier"
 require "courrier/engine"
+require "courrier/configuration/inbox"
 require "courrier/railtie"
 require "courrier/email/delivery_job"
 require "courrier/email/providers/inbox"
-require "courrier/configuration/inbox"
 
 Courrier::Email::Provider::PROVIDERS[:inbox] = Courrier::Email::Providers::Inbox
 
