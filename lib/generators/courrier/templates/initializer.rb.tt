@@ -41,4 +41,7 @@ Courrier.configure do |config|
   # config.subscriber = {
   #   provider: ""
   # }
+
+  # Enable event tracking (delivery events stored in courrier_events table)
+  # Courrier::Event.enabled = true
 end

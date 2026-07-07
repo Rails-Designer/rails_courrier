@@ -6,6 +6,23 @@ module Courrier
       if Courrier.configuration.email_path == File.join("courrier", "emails")
         Courrier.configuration.email_path = Rails.root.join("app", "emails").to_s
       end
+
+      Courrier::Email.after_deliver do |email, result|
+        next unless Courrier::Event.enabled?
+
+        Courrier::Event.record(
+          "email.#{result.success? ? "delivered" : "failed"}",
+          metadata: {
+            email_class: email.class.name,
+            to: email.options.to,
+            from: email.options.from,
+            subject: email.options.subject,
+            provider: email.provider,
+            message_id: result.data["message_id"] || result.data["id"],
+            error: result.error&.message
+          }
+        )
+      end
     end
 
     ActiveSupport.on_load(:action_view) do

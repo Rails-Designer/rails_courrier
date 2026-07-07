@@ -13,4 +13,6 @@ group :development, :test do
   gem "minitest", "~> 5.25", ">= 5.25.5"
   gem "debug", "~> 1.9", ">= 1.9.2"
   gem "propshaft"
+  gem "sqlite3"
+  gem "activerecord"
 end
