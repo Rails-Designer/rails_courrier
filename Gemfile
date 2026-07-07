@@ -12,4 +12,5 @@ group :development, :test do
   gem "rake", "~> 13.2", ">= 13.2.1"
   gem "minitest", "~> 5.25", ">= 5.25.5"
   gem "debug", "~> 1.9", ">= 1.9.2"
+  gem "propshaft"
 end
