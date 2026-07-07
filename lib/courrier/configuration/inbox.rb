@@ -8,7 +8,7 @@ module Courrier
       def initialize
         @destination = default_destination
         @auto_open = false
-        @template_path = File.expand_path("../email/providers/inbox/default.html.erb", __dir__)
+        @template_path = File.expand_path("../../../app/views/courrier/previews/default.html.erb", __dir__)
       end
 
       private
@@ -16,6 +16,10 @@ module Courrier
       def default_destination
         Rails.root.join("tmp", "courrier", "emails").to_s
       end
+    end
+
+    def inbox
+      @inbox ||= Inbox.new
     end
   end
 end

@@ -2,7 +2,7 @@
 
 Rails-specific features for [Courrier](https://github.com/Rails-Designer/courrier), the API-powered email delivery gem for Ruby.
 
-![Preview of the Rails Courrier inbox with a list of images on the left and preview of an email on the right](https://raw.githubusercontent.com/Rails-Designer/rails_courrier/HEAD/.github/rails_courrier_inbox.jpg)
+![Preview of the Rails Courrier inbox with a list of images on the left and preview of an email on the right](https://raw.githubusercontent.com/Rails-Designer/rails_courrier/HEAD/.github/rails-courrier-inbox.jpg)
 
 
 <a href="https://railsdesigner.com/" target="_blank">
