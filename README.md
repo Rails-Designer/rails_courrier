@@ -108,6 +108,24 @@ end
 ```
 
 
+### Monitoring
+
+Rails Courrier publishes delivery lifecycle events via `ActiveSupport::Notifications`:
+
+```ruby
+ActiveSupport::Notifications.subscribe("delivery.courrier") do |event|
+  Rails.logger.info "[Courrier] #{event.payload[:email]} delivered in #{event.duration}ms"
+end
+```
+
+#### Available events
+
+| Event | When it fires | Payload |
+|-------|---------------|---------|
+| `delivery.courrier` | Email delivered successfully | `email`, `options` |
+| `delivery_failed.courrier` | Delivery raised an exception | `email`, `options`, `exception` |
+
+
 ## Documentation
 
 See the [Courrier README](https://github.com/Rails-Designer/courrier) for full configuration, providers, layouts, templates and more.

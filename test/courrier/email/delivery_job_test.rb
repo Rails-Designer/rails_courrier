@@ -70,4 +70,67 @@ class Courrier::Email::DeliveryJobTest < Minitest::Test
     job = ActiveJob::Base.queue_adapter.enqueued_jobs.first
     assert_equal "emails", job[:queue]
   end
+
+  def test_perform_fires_delivery_courrier_notification
+    events = []
+    subscriber = ActiveSupport::Notifications.subscribe("delivery.courrier") do |*args|
+      events << ActiveSupport::Notifications::Event.new(*args)
+    end
+
+    mock_provider = create_mock_provider
+
+    Courrier::Email::Provider.stub :new, ->(_) { mock_provider } do
+      Courrier::Email::DeliveryJob.new.perform(
+        "TestEmail",
+        from: "devs@railsdesigner.com",
+        to: "recipient@railsdesigner.com"
+      )
+    end
+
+    assert_equal 1, events.size
+    assert_equal "delivery.courrier", events.first.name
+    assert_equal "TestEmail", events.first.payload[:email]
+    assert_equal "devs@railsdesigner.com", events.first.payload[:options][:from]
+    assert_equal "recipient@railsdesigner.com", events.first.payload[:options][:to]
+  ensure
+    ActiveSupport::Notifications.unsubscribe(subscriber)
+  end
+
+  def test_perform_fires_delivery_failed_courrier_notification_on_error
+    events = []
+    subscriber = ActiveSupport::Notifications.subscribe("delivery_failed.courrier") do |*args|
+      events << ActiveSupport::Notifications::Event.new(*args)
+    end
+
+    begin
+      Courrier::Email::Provider.stub :new, ->(_) { raise "provider_boom" } do
+        Courrier::Email::DeliveryJob.new.perform(
+          "TestEmail",
+          from: "devs@railsdesigner.com",
+          to: "recipient@railsdesigner.com"
+        )
+      end
+    rescue RuntimeError
+    end
+
+    assert_equal 1, events.size
+    assert_equal "delivery_failed.courrier", events.first.name
+    assert_equal "TestEmail", events.first.payload[:email]
+    assert_equal "RuntimeError", events.first.payload[:exception][0]
+    assert_equal "provider_boom", events.first.payload[:exception][1]
+  ensure
+    ActiveSupport::Notifications.unsubscribe(subscriber)
+  end
+
+  def test_perform_still_raises_on_error
+    Courrier::Email::Provider.stub :new, ->(_) { raise "provider_boom" } do
+      assert_raises(RuntimeError, "provider_boom") do
+        Courrier::Email::DeliveryJob.new.perform(
+          "TestEmail",
+          from: "devs@railsdesigner.com",
+          to: "recipient@railsdesigner.com"
+        )
+      end
+    end
+  end
 end
