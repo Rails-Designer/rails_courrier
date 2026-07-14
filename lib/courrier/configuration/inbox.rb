@@ -3,11 +3,10 @@
 module Courrier
   class Configuration
     class Inbox
-      attr_accessor :destination, :auto_open, :template_path
+      attr_accessor :destination, :template_path
 
       def initialize
         @destination = default_destination
-        @auto_open = false
         @template_path = File.expand_path("../../../app/views/courrier/previews/default.html.erb", __dir__)
       end
 
