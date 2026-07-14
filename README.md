@@ -29,6 +29,9 @@ bundle add rails_courrier
 Generate the initializer:
 ```bash
 bin/rails generate courrier:install
+
+# Or pass a provider to pre-fill provider-specific config:
+bin/rails generate courrier:install --provider=mailpace
 ```
 
 This creates `config/initializers/courrier.rb`.
@@ -40,7 +43,7 @@ bin/rails generate courrier:email Order
 
 This creates `app/emails/order_email.rb`.
 
-Mount the engine for inbox previews:
+Mount the engine to browse inbox previews in your browser:
 ```ruby
 # config/routes.rb
 mount Courrier::Engine => "/courrier"
@@ -79,16 +82,11 @@ Preview emails in your browser:
 ```ruby
 # config/initializers/courrier.rb
 Courrier.configure do |config|
-  config.email = { provider: "inbox" }
+  config.email = { provider: "inbox", auto_open: true }
 end
 ```
 
-Enable auto-open:
-
-```ruby
-config.email = { provider: "inbox" }
-config.inbox.auto_open = true
-```
+The `auto_open` option opens each sent email in your default browser automatically.
 
 Clear inbox files:
 

@@ -15,7 +15,7 @@ module Courrier
 
           File.write(file_path, ERB.new(File.read(config.template_path)).result(binding))
 
-          Launchy.open(file_path) if config.auto_open
+          Launchy.open(file_path) if Courrier.configuration.email[:auto_open]
 
           "📮 Email saved to #{file_path} and #{email_destination}"
         end
@@ -47,7 +47,7 @@ module Courrier
         def config = @config ||= Courrier.configuration.inbox
 
         def email_destination
-          return "opened in your default browser" if config.auto_open
+          return "opened in your default browser" if Courrier.configuration.email[:auto_open]
 
           path = begin
             Rails.application.routes.url_helpers.courrier_path
