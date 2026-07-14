@@ -43,6 +43,7 @@ module Courrier
       end
     end
 
+    Courrier::Email.include Courrier::Email::Translation
     Courrier::Email.extend ClassMethods
     Courrier::Email.singleton_class.prepend InheritedHook
   end
