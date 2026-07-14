@@ -2,19 +2,37 @@ Courrier.configure do |config|
   include Courrier::Email::Address
 
   # Set your email delivery provider
+<% if options[:provider] -%>
+  config.email = {
+    provider: "<%= options[:provider] %>",  # default: `logger`, other options: <%= Courrier::Email::Provider::PROVIDERS.keys.join(", ") %>
+    api_key: ""  # provider API key
+  }
+<% else -%>
   # config.email = {
-  #   provider: "", # default, `logger`, choose from: <%= Courrier::Email::Provider::PROVIDERS.keys.join(", ") %>
-  #   api_key: "" your transactional email provider's API key
+  #   provider: "", # default, `logger`, other options: <%= Courrier::Email::Provider::PROVIDERS.keys.join(", ") %>
+  #   api_key: "" # Your transactional email provider's API key
   # }
+<% end -%>
 
+<% if options[:provider] && provider_config_options.any? -%>
 
   # Configure provider-specific settings
-  # config.providers.loops.transactional_id = ""
-  # config.providers.mailgun.domain = ""
+<% provider_config_options.each do |key| -%>
+  # config.providers.<%= options[:provider] %>.<%= key %> = ""
+<% end -%>
+<% elsif !options[:provider] -%>
+
+  # Configure provider-specific settings
+<% Courrier::Email::Provider::PROVIDERS.each do |name, provider_class| -%>
+<% provider_class.config_options.each do |key| -%>
+  # config.providers.<%= name %>.<%= key %> = ""
+<% end -%>
+<% end -%>
+<% end -%>
 
 
   # Set default sender details
-  config.from = email_with_name("support@example.com", "Example Support") # => `Example Support <support@example.com>`
+  config.from = email_with_name("support@example.com", "Example Support")  # => `Example Support <support@example.com>`
   # config.reply_to = ""
   # config.cc = ""
   # config.bcc = ""
