@@ -125,6 +125,31 @@ end
 | `delivery_failed.courrier` | Delivery raised an exception | `email`, `options`, `exception` |
 
 
+### I18n
+
+Use the `t` helper in email classes and ERB templates, scoped under `courrier.email.<class_name>`:
+```yaml
+# config/locales/courrier/en.yml
+en:
+  courrier:
+    email:
+      order_email:
+        subject: "Your order is ready!"
+        text:
+          greeting: "Hello %{name}, your order is ready."
+```
+
+```ruby
+class OrderEmail < Courrier::Email
+  def subject = t(".subject")
+
+  def text = t(".text.greeting", name: options.to)
+end
+```
+
+Full translation keys (e.g. `t("shared.greeting")`) pass through unscoped.
+
+
 ## Documentation
 
 See the [Courrier README](https://github.com/Rails-Designer/courrier) for full configuration, providers, layouts, templates and more.

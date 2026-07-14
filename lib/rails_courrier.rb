@@ -12,6 +12,7 @@ require "launchy"
 
 require "courrier"
 require "courrier/engine"
+require "courrier/email/translation"
 require "courrier/railtie"
 require "courrier/email/delivery_job"
 require "courrier/email/providers/inbox"
